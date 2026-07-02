@@ -1,4 +1,4 @@
-const data = [
+const datas = [
     {
         question: "What is React?",
         options: ["Library", "Framework", "Language", "Database"],
@@ -15,3 +15,5 @@ const data = [
         answer: "JSX",
     }
 ];
+
+export default datas
