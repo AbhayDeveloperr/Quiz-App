@@ -12,6 +12,7 @@ const App = () => {
       <h2>
         {datas[currentQue].question}
       </h2>
+      <h1>Maintaining Streaks</h1>
     </div>
   )
 }
