@@ -19,7 +19,6 @@ const App = () => {
               setSelectedOption(option)
             }} className='block'>{option}</button>
         ))}
-        
       </h2>
     </div>
   )
