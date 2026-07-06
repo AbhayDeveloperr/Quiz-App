@@ -28,6 +28,7 @@ const App = () => {
         ))}
       </div>
       <button onClick={handleNext} className='bg-green-700 px-3 py-1 my-2 cursor-pointer active:scale-95'>Next</button>
+      console.log("Streak Maintaining")
     </div>
   )
 }
