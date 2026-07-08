@@ -10,13 +10,19 @@ const App = () => {
 
   const [score, setScore] = useState(0);
 
+  const [isFinished, setIsFinished] = useState(false);
+
   const handleNext=()=>{
     // Score Banana
     if(selectedOption===questions[currentQue].answer){
       setScore(score+1)
     }
-    setCurrentQue(currentQue+1)
-    setSelectedOption("")
+    if(currentQue < questions.length-1){
+      setCurrentQue(currentQue+1)
+      setSelectedOption("")
+    }else{
+      setIsFinished(true)
+    }
   };
   
 
@@ -34,7 +40,11 @@ const App = () => {
             }} className='block cursor-pointer'>{option}</button>
         ))}
       </div>
-      <button onClick={handleNext} className='bg-green-700 px-3 py-1 my-8 cursor-pointer active:scale-95'>Next</button>
+      <button onClick={handleNext} className='bg-green-700 px-3 py-1 my-8 cursor-pointer active:scale-95'>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
+
+      <p className='text-3xl mt-5'>
+        Your Score = {score}/{questions.length}
+      </p>
     </div>
   )
 }
