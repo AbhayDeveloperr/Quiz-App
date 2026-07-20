@@ -12,14 +12,23 @@ const App = () => {
 
   const [isFinished, setIsFinished] = useState(false);
 
+  const [maxAttempt, setMaxAttempt] = useState(false);
+
   const handleNext=()=>{
     // Score Banana
+    // console.log(questions.length)
     if(selectedOption===questions[currentQue].answer){
       setScore(score+1)
+      
     }
     if(currentQue < questions.length-1){
       setCurrentQue(currentQue+1)
       setSelectedOption("")
+      console.log(currentQue)
+      if(currentQue ==2){
+        setMaxAttempt(true)
+        console.log('yes here')
+      }
     }else{
       setIsFinished(true)
     }
@@ -40,7 +49,7 @@ const App = () => {
             }} className='block cursor-pointer'>{option}</button>
         ))}
       </div>
-      <button onClick={handleNext} className='bg-green-700 px-3 py-1 my-8 cursor-pointer active:scale-95'>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
+      <button onClick={handleNext} className={`bg-green-700 px-3 py-1 my-8 cursor-pointer active:scale-95 ${maxAttempt? 'disabled:cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
 
       <p className='text-3xl mt-5'>
         Your Score = {score}/{questions.length}
