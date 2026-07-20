@@ -25,19 +25,17 @@ const App = () => {
       setCurrentQue(currentQue+1)
       setSelectedOption("")
       console.log(currentQue)
-      if(currentQue ==2){
-        setMaxAttempt(true)
-        console.log('yes here')
-      }
+      
     }else{
       setIsFinished(true)
+      setMaxAttempt(true)
     }
   };
   
 
   return (
     <div className='flex items-center justify-center flex-col pt-5'>
-      <h1 className='text-3xl font-bold'>Quiz App</h1>
+      <h1 className='text-3xl font-bold text-amber-300'>Quiz App</h1>
 
       <h2 className='pt-8 font-semibold text-xl'>
         {questions[currentQue].question}
@@ -49,7 +47,7 @@ const App = () => {
             }} className='block cursor-pointer'>{option}</button>
         ))}
       </div>
-      <button onClick={handleNext} className={`bg-green-700 px-3 py-1 my-8 cursor-pointer active:scale-95 ${maxAttempt? 'disabled:cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
+      <button onClick={handleNext} className={`bg-green-700 px-3 py-1 my-8 active:scale-95 ${maxAttempt? 'cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
 
       <p className='text-3xl mt-5'>
         Your Score = {score}/{questions.length}
