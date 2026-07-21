@@ -18,7 +18,6 @@ const App = () => {
 
   const handleNext=()=>{
     // Score Banana
-    // console.log(questions.length)
     if(selectedOption===questions[currentQue].answer){
       setScore(score+1)
       
@@ -40,8 +39,8 @@ const App = () => {
   
 //check why the currentqueue value is not approaching to 3.
   return (
-    <div className='text-center pt-5'>
-      <h1 className='text-3xl font-bold text-amber-300'>Quiz App</h1>
+    <div className='text-center pt-8'>
+      <h1 className='text-5xl font-bold text-amber-300'>Quiz App</h1>
       <div id="game-over" className='mt-4'>
         {isFinished && (
           <p className="text-red-700 inline bg-red-300 px-4 py-2">
@@ -50,7 +49,7 @@ const App = () => {
         )}
       </div>
     <div className={` ${maxAttempt? 'hidden' : 'block'}`}>
-      <h2 className='pt-8 font-semibold text-xl text-center'>
+      <h2 className='pt-8 pb-4 font-semibold text-2xl text-center'>
         {questions[currentQue].question}
       </h2>
       <div className=' flex justify-center items-center'>
@@ -58,9 +57,9 @@ const App = () => {
             {questions[currentQue].options.map((option)=>(
               <button onClick={()=>{
                 setSelectedOption(option)
-              }} className='block cursor-pointer'>{option}</button>
+              }} className= {`block w-64 py-3 my-2 rounded-lg transition-all duration-300 hover:scale-105 active:scale-95 ${selectedOption==option? "bg-green-600 text-white" : "bg-gray-300 hover:bg-gray-400"}`}>{option}</button>
             ))}
-            <button onClick={handleNext} className={`bg-green-700 px-3 py-1 my-8 active:scale-95 ${maxAttempt? 'cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
+            <button onClick={handleNext} className={`bg-sky-600 px-6 py-1 my-8 hover:scale-105 active:scale-95 ${maxAttempt? 'cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
         </div>
       </div>
     </div>
