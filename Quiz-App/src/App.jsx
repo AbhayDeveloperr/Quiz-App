@@ -44,7 +44,7 @@ const App = () => {
 //check why the currentqueue value is not approaching to 3.
   return (
     <div className='flex justify-center items-center h-screen'>
-      <div className='text-center pt-8 bg-red-900 shadow-lg shadow-gray-50 px-6 pb-8 rounded-xl h-[75vh]'>
+      <div className='text-center pt-8 bg-red-900 shadow-lg shadow-gray-50 px-10 pb-8 rounded-xl h-[75vh]'>
         <h1 className='text-5xl font-bold text-white'>Quiz App</h1>
         <div id="game-over" className='mt-4'>
           {isFinished && (
@@ -54,7 +54,10 @@ const App = () => {
           )}
         </div>
       <div className={` ${maxAttempt? 'hidden' : 'block'}`}>
-        <h2 className='pt-8 pb-4 font-semibold text-2xl text-center text-yellow-400'>
+        <p className='text-white text-lg font-semibold pt-2'>
+          Question {currentQue+1}/{questions.length}
+        </p>
+        <h2 className='pt-6 pb-4 font-semibold text-2xl text-center text-yellow-400'>
           {questions[currentQue].question}
         </h2>
         <div className=' flex justify-center items-center'>
