@@ -17,12 +17,16 @@ const App = () => {
   const [attemptCounter, setAttemptCounter] = useState(0);
 
   const handleNext=()=>{
+
+    if (selectedOption === "") {
+      alert("Please select an option first!");
+      return;
+    }
     // Score Banana
     if(selectedOption===questions[currentQue].answer){
       setScore(score+1)
       
     }            
-
 
     if(currentQue < questions.length-1){
       setCurrentQue(currentQue+1)  //2
