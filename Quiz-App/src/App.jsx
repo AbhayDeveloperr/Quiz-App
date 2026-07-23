@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import questions from './data'
 
 const App = () => {
@@ -16,8 +16,10 @@ const App = () => {
 
   const [attemptCounter, setAttemptCounter] = useState(0);
 
+  const [timeLeft, setTimeLeft] = useState(15);
+
   const handleNext=()=>{
-    //Question Counter
+    // Check if the user has selected an option
     if (selectedOption === "") {
       alert("Please select an option first!");
       return;
@@ -48,7 +50,14 @@ const App = () => {
     setAttemptCounter(0)
     setIsFinished(false)
     setMaxAttempt(false)
-  }
+  };
+
+  useEffect(()=>{
+    const interval = setInterval(()=>{
+      setTimeLeft((prev) => prev - 1);
+    },1000);
+    return () => clearInterval(interval);
+  },[])
   
 //check why the currentqueue value is not approaching to 3.
   return (
@@ -62,7 +71,7 @@ const App = () => {
                 Game is over!! Your score is {score}
               </p>
               <br />
-              <button onClick={handleRestart} className="bg-green-600 text-white px-6 py-2 rounded mt-5 hover:bg-green-700">
+              <button onClick={handleRestart} className="bg-green-600 text-white px-6 py-2 rounded mt-5 hover:bg-green-700 cursor-pointer">
                 Play Again
               </button>
             </div>
@@ -72,6 +81,10 @@ const App = () => {
         {/* Question Counter */}
         <p className='text-white text-lg font-semibold pt-2'>
           Question {currentQue+1}/{questions.length}
+        </p>
+
+        <p className="text-red-400 text-lg font-bold mt-2">
+          Time Left : {timeLeft}s
         </p>
   
         <h2 className='pt-6 pb-4 font-semibold text-2xl text-center text-yellow-400'>
