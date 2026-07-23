@@ -18,9 +18,9 @@ const App = () => {
 
   const [timeLeft, setTimeLeft] = useState(15);
 
-  const handleNext=()=>{
+  const handleNext=(isAuto = false)=>{ 
     // Check if the user has selected an option
-    if (selectedOption === "") {
+    if (!isAuto && selectedOption === "") {          //isAuto matlab jab user next btn clck krega
       alert("Please select an option first!");
       return;
     }
@@ -31,8 +31,9 @@ const App = () => {
     }            
 
     if(currentQue < questions.length-1){
-      setCurrentQue(currentQue+1)  //2
+      setCurrentQue(currentQue+1)
       setSelectedOption("")
+      setTimeLeft(15)
       console.log(currentQue)
       
     }else{
@@ -50,19 +51,25 @@ const App = () => {
     setAttemptCounter(0)
     setIsFinished(false)
     setMaxAttempt(false)
+    setTimeLeft(15)
   };
 
   useEffect(()=>{
+    if (isFinished) return;
+
+    if(timeLeft===0){
+      handleNext(true);
+    }
     const interval = setInterval(()=>{
       setTimeLeft((prev) => prev - 1);
     },1000);
     return () => clearInterval(interval);
-  },[])
+  },[timeLeft]);
   
 //check why the currentqueue value is not approaching to 3.
   return (
     <div className='flex justify-center items-center h-screen'>
-      <div className='text-center pt-8 bg-red-900 shadow-lg shadow-gray-50 px-10 pb-8 rounded-xl h-[75vh]'>
+      <div className='text-center pt-8 bg-red-900 shadow-lg shadow-gray-50 px-10 pb-8 rounded-xl h-[78vh]'>
         <h1 className='text-5xl font-bold text-white'>Quiz App</h1>
         <div id="game-over" className='mt-4'>
           {isFinished && (
@@ -97,7 +104,9 @@ const App = () => {
                   setSelectedOption(option)
                 }} className= {`block w-64 py-3 my-2 rounded-lg transition-all duration-100 cursor-pointer hover:scale-105 active:scale-95 ${selectedOption==option? "bg-green-600 text-white" : "bg-gray-50 hover:bg-gray-100"}`}>{option}</button>
               ))}
-              <button onClick={handleNext} className={`bg-black border-2 border-white text-white rounded-md px-12 py-2 my-8 hover:scale-105 active:scale-95 ${maxAttempt? 'cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
+              <button onClick={()=>{
+                handleNext()
+              }} className={`bg-black border-2 border-white text-white rounded-md px-12 py-2 my-8 hover:scale-105 active:scale-95 ${maxAttempt? 'cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
           </div>
         </div>
       </div>
