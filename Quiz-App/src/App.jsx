@@ -75,7 +75,7 @@ const App = () => {
 //check why the currentqueue value is not approaching to 3.
   return (
     <div className='flex justify-center items-center h-screen bg-[#A4B885]'>
-      <div className='text-center pt-8 bg-red-900 shadow-lg shadow-gray-50 px-10 pb-8 rounded-xl h-[80vh]'>
+      <div className='text-center pt-8 bg-red-900 shadow-lg  px-10 pb-8 rounded-xl h-[80vh]'>
         <h1 className='text-5xl font-bold text-white'>Quiz App</h1>
         <div id="game-over" className='mt-4'>
           {isFinished && (
