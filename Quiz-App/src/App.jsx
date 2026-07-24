@@ -18,6 +18,8 @@ const App = () => {
 
   const [timeLeft, setTimeLeft] = useState(15);
 
+  const [answerChecked, setAnswerChecked] = useState(false);
+
   const handleNext=(isAuto = false)=>{ 
     // Check if the user has selected an option
     if (!isAuto && selectedOption === "") {          //isAuto matlab jab user next btn clck krega
@@ -30,16 +32,20 @@ const App = () => {
       
     }            
 
-    if(currentQue < questions.length-1){
-      setCurrentQue(currentQue+1)
-      setSelectedOption("")
-      setTimeLeft(15)
-      console.log(currentQue)
-      
-    }else{
-      setIsFinished(true)
-      setMaxAttempt(true)
-    }
+    setAnswerChecked(true)
+    setTimeout(()=>{
+      if(currentQue < questions.length-1){
+        setCurrentQue(currentQue+1)
+        setSelectedOption("")
+        setTimeLeft(15)
+        console.log(currentQue)
+        
+      }else{
+        setIsFinished(true)
+        setMaxAttempt(true)
+      }
+      setAnswerChecked(false)
+    },1000)
     setAttemptCounter(attemptCounter+1)
    
   };
@@ -68,7 +74,7 @@ const App = () => {
   
 //check why the currentqueue value is not approaching to 3.
   return (
-    <div className='flex justify-center items-center h-screen'>
+    <div className='flex justify-center items-center h-screen bg-[#A4B885]'>
       <div className='text-center pt-8 bg-red-900 shadow-lg shadow-gray-50 px-10 pb-8 rounded-xl h-[80vh]'>
         <h1 className='text-5xl font-bold text-white'>Quiz App</h1>
         <div id="game-over" className='mt-4'>
@@ -102,7 +108,9 @@ const App = () => {
               {questions[currentQue].options.map((option)=>(
                 <button onClick={()=>{
                   setSelectedOption(option)
-                }} className= {`block w-64 py-3 my-2 rounded-lg transition-all duration-100 cursor-pointer hover:scale-105 active:scale-95 ${selectedOption==option? "bg-green-600 text-white" : "bg-gray-50 hover:bg-gray-100"}`}>{option}</button>
+                }} className= {`block w-64 py-3 my-2 rounded-lg transition-all duration-100 cursor-pointer hover:scale-105 active:scale-95 ${answerChecked? (
+                  option===questions[currentQue].answer ? "bg-green-600 text-white" : option===selectedOption? "bg-red-600 text-white" : "bg-gray-50"
+                ) : (selectedOption===option? "bg-blue-600 text-white" : "bg-gray-50 hover:bg-gray-100")}`}>{option}</button>
               ))}
               <button onClick={()=>{
                 handleNext()
