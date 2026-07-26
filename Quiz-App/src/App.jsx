@@ -74,9 +74,9 @@ const App = () => {
   
 //check why the currentqueue value is not approaching to 3.
   return (
-    <div className='flex justify-center items-center h-screen bg-[#A4B885]'>
-      <div className='text-center pt-8 bg-red-900 shadow-lg  px-10 pb-8 rounded-xl h-[80vh]'>
-        <h1 className='text-5xl font-bold text-white'>Quiz App</h1>
+    <div className='flex justify-center items-center p-5 md:h-screen bg-[#A4B885]'>
+      <div className='text-center pt-8 bg-red-900 shadow-lg w-full md:w-sm  px-10 pb-8 rounded-xl h-[84vh] md:h-[90vh] min-h-[84vh] md:min-h-[90vh]'>
+        <h1 className='text-2xl md:text-5xl font-bold text-white'>Quiz App</h1>
         <div id="game-over" className='mt-4'>
           {isFinished && (
             <div className='mt-5'>
@@ -100,7 +100,7 @@ const App = () => {
           Time Left : {timeLeft}s
         </p>
   
-        <h2 className='pt-6 pb-4 font-semibold text-2xl text-center text-yellow-400'>
+        <h2 className='pt-6 pb-4 font-semibold text-2xl text-center text-yellow-400 max-w-sm text-wrap'>
           {questions[currentQue].question}
         </h2>
         <div className=' flex justify-center items-center'>
@@ -114,12 +114,12 @@ const App = () => {
               ))}
               <button onClick={()=>{
                 handleNext()
-              }} className={`bg-black border-2 border-white text-white rounded-md px-12 py-2 my-8 hover:scale-105 active:scale-95 ${maxAttempt? 'cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
+              }} className={`bg-black border-2 border-white text-white rounded-md px-12 py-2 mt-8 hover:scale-105 active:scale-95 ${maxAttempt? 'cursor-not-allowed' : 'cursor-pointer'}`}>{currentQue === questions.length - 1 ? "Submit" : "Next"}</button>
           </div>
         </div>
       </div>
 
-      <p className='text-xl mt-5 text-gray-50 font-bold'>
+      <p className='text-xl mt-3 md:mt-5 text-gray-50 font-bold'>
         
         Total Attempts = {attemptCounter}
       </p>
