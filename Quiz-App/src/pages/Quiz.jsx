@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import questions from '../data'
 
 const Quiz = () => {
 
   const [currentQue, setCurrentQue] = useState(0);
 
   const [selectedOption, setSelectedOption] = useState("");
-  console.log(selectedOption);
 
   const [score, setScore] = useState(0);
 
@@ -19,6 +17,9 @@ const Quiz = () => {
   const [timeLeft, setTimeLeft] = useState(15);
 
   const [answerChecked, setAnswerChecked] = useState(false);
+
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const playerName = localStorage.getItem("playerName");
   const questionLimit = Number(localStorage.getItem("questionLimit"));
@@ -65,6 +66,36 @@ const Quiz = () => {
   };
 
   useEffect(()=>{
+    const fetchQuestions=async()=>{
+      try{
+        const response = await fetch(`https://opentdb.com/api.php?amount=${questionLimit}&difficulty=${difficulty.toLowerCase()}&type=multiple`);
+        const data = await response.json()
+        console.log(data.results);
+
+        const formattedQuestions = data.results.map((item) => {
+          const options = [
+            ...item.incorrect_answers,
+            item.correct_answer,
+          ];
+          options.sort(() => Math.random() - 0.5);
+
+          return {
+            question: item.question,
+            options: options,
+            answer: item.correct_answer,
+          };
+        });
+
+        setQuestions(formattedQuestions)
+        setLoading(false)
+      }catch(error){
+        console.log(error);
+      }
+    }
+    fetchQuestions()
+  },[])
+
+  useEffect(()=>{
     if (isFinished) return;
 
     if(timeLeft===0){
@@ -76,10 +107,12 @@ const Quiz = () => {
     return () => clearInterval(interval);
   },[timeLeft]);
   
-//check why the currentqueue value is not approaching to 3.
+  if(loading){
+    return <h1>Loading...</h1>
+  }
   return (
     <div className='flex justify-center items-center p-5 md:h-screen bg-[#A4B885]'>
-      <div className='text-center pt-8 bg-red-900 shadow-lg w-full md:w-sm  px-10 pb-8 rounded-xl h-[84vh] md:h-[90vh] min-h-[84vh] md:min-h-[90vh]'>
+      <div className='text-center pt-8 bg-red-900 shadow-lg w-full md:w-sm  px-10 pb-8 rounded-xl h-[84vh] md:h-[90vh] min-h-[84vh] md:min-h-[90vh] flex flex-col'>
         <h1 className='text-2xl md:text-5xl font-bold text-white'>Quiz App</h1>
         <div id="game-over" className='mt-4'>
           {isFinished && (
@@ -94,7 +127,7 @@ const Quiz = () => {
             </div>
           )}
         </div>
-      <div className={` ${maxAttempt? 'hidden' : 'block'}`}>
+      <div className={` ${maxAttempt? 'hidden' : 'block'} flex-1 overflow-y-auto`}>
         {/* Question Counter */}
         <p className='text-blue-300 text-lg font-semibold pt-2'>
           Question {currentQue+1}/{questions.length}
