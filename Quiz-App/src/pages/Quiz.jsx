@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
 
@@ -24,6 +25,7 @@ const Quiz = () => {
   const playerName = localStorage.getItem("playerName");
   const questionLimit = Number(localStorage.getItem("questionLimit"));
   const difficulty = localStorage.getItem("difficulty");
+  const navigate = useNavigate();
 
   const handleNext=(isAuto = false)=>{ 
     // Check if the user has selected an option
@@ -39,6 +41,8 @@ const Quiz = () => {
 
     setAnswerChecked(true)
     setTimeout(()=>{
+
+      
       if(currentQue < questions.length-1){
         setCurrentQue(currentQue+1)
         setSelectedOption("")
@@ -47,6 +51,18 @@ const Quiz = () => {
         
       }else{
         setIsFinished(true)
+        
+        const finalScore = selectedOption === questions[currentQue].answer ? score + 1 : score;
+        const finalAttempts = attemptCounter + 1;
+
+        navigate("/result", {
+          state: {
+              score:finalScore,
+              playerName,
+              totalQuestions: questions.length,
+              attempts: finalAttempts
+          }
+        });
         setMaxAttempt(true)
       }
       setAnswerChecked(false)
@@ -108,7 +124,11 @@ const Quiz = () => {
   },[timeLeft]);
   
   if(loading){
-    return <h1>Loading...</h1>
+    return(
+      <div className='flex items-center justify-center bg-gray-900 min-h-screen'>
+        <h1 className='text-5xl text-white '>Loading...</h1>
+      </div>
+    )
   }
   return (
     <div className='flex justify-center items-center p-5 md:h-screen bg-[#A4B885]'>
