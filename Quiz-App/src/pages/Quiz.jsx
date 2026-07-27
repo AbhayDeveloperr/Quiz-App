@@ -60,7 +60,7 @@ const Quiz = () => {
               score:finalScore,
               playerName,
               totalQuestions: questions.length,
-              attempts: finalAttempts
+              attempts: finalAttempts,
           }
         });
         setMaxAttempt(true)
@@ -84,7 +84,7 @@ const Quiz = () => {
   useEffect(()=>{
     const fetchQuestions=async()=>{
       try{
-        const response = await fetch(`https://opentdb.com/api.php?amount=${questionLimit}&difficulty=${difficulty.toLowerCase()}&type=multiple`);
+        const response = await fetch(`https://opentdb.com/api.php?amount=${questionLimit}&difficulty=${difficulty.toLowerCase()}&type=multiple&category=9`);
         const data = await response.json()
         console.log(data.results);
 
