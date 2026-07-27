@@ -20,6 +20,10 @@ const Quiz = () => {
 
   const [answerChecked, setAnswerChecked] = useState(false);
 
+  const playerName = localStorage.getItem("playerName");
+  const questionLimit = Number(localStorage.getItem("questionLimit"));
+  const difficulty = localStorage.getItem("difficulty");
+
   const handleNext=(isAuto = false)=>{ 
     // Check if the user has selected an option
     if (!isAuto && selectedOption === "") {          //isAuto matlab jab user next btn clck krega
